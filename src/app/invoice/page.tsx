@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Invoices from "../components/Invoices";
 import plus from "../assets/carbon_add.svg";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,6 +21,7 @@ const page = () => {
             Add Invoices
           </Link>
         </div>
+        <Invoices></Invoices>
       </main>
     </div>
   );

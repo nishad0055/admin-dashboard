@@ -14,7 +14,7 @@ const Header = () => {
     setOpen(!open);
   };
   return (
-    <div className="flex  justify-between items-center bg-white h-28 px-7 rounded-lg">
+    <div className="flex  justify-between items-center bg-white h-28 px-4 rounded-lg">
       <div className="relative text-gray-600">
         <input
           className="searchbar bg-white h-14 w-[476px] pl-12 rounded-full text-base text-[#3B3E44] focus:outline-none"
