@@ -17,3 +17,8 @@
 
 body {
 }
+
+.searchbar {
+  border-radius: 30px;
+  border: 1px solid rgba(59, 62, 68, 0.2);
+}

@@ -37,7 +37,7 @@ const Sidebar = () => {
       icon: trips,
     },
     {
-      path: "/",
+      path: "/invoice",
       title: "Invoice",
       icon: invoice,
     },
