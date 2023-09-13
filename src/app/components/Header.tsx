@@ -49,11 +49,11 @@ const Header = () => {
               />
             </div>
             {open && (
-              <ul className="p-3 ml-10 absolute -right-3 top-14 bg-primary text-white rounded-lg">
+              <ul className="p-2 ml-10 absolute -right-3 top-10 bg-primary text-white rounded-lg transition-all duration-500">
                 <li className="">
                   <Link href="/profile">Profile</Link>
                 </li>
-                <li className="mt-2">
+                <li className="mt-1">
                   <Link href="/">Logout</Link>
                 </li>
               </ul>

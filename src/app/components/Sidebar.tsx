@@ -171,7 +171,7 @@ const Sidebar = () => {
       <div className=" mt-10 ">
         <li className="flex items-center p-4 text-white gap-x-4 cursor-pointer">
           <FiLogOut size={30} />
-          <span>Logout</span>
+          <span className={`${!open && "hidden"}`}>Logout</span>
         </li>
       </div>
     </div>
