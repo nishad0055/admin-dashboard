@@ -1,10 +1,18 @@
+"use client";
 import { AiOutlineSearch } from "react-icons/ai";
 import chat from "../assets/chat.png";
 import Image from "next/image";
 import notification from "../assets/notification.png";
 import user from "../assets/user.png";
+import { BsChevronDown } from "react-icons/bs";
+import Link from "next/link";
+import { useState } from "react";
 
 const Header = () => {
+  const [open, setOpen] = useState(false);
+  const handleToggle = () => {
+    setOpen(!open);
+  };
   return (
     <div className="flex  justify-between items-center bg-white h-28 px-7 rounded-lg">
       <div className="relative text-gray-600">
@@ -32,8 +40,24 @@ const Header = () => {
               4
             </div>
           </li>
-          <li className="relative list-none ">
-            <Image src={user} alt="chat" />
+          <li className="relative list-none">
+            <div className="flex items-center gap-2">
+              <Image src={user} alt="chat" />
+              <BsChevronDown
+                onClick={handleToggle}
+                className="cursor-pointer"
+              />
+            </div>
+            {open && (
+              <ul className="p-3 ml-10 absolute -right-3 top-14 bg-primary text-white rounded-lg">
+                <li className="">
+                  <Link href="/profile">Profile</Link>
+                </li>
+                <li className="mt-2">
+                  <Link href="/">Logout</Link>
+                </li>
+              </ul>
+            )}
           </li>
         </div>
       </div>
