@@ -3,14 +3,31 @@ import React, { useState } from "react";
 import { BsChevronDown, BsCalendar4, BsUpload } from "react-icons/bs";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-import deletebutton from "../assets/deletebutton.png";
-import Image from "next/image";
+import ProductInput from "./ProductInput";
 
 const Invoices = () => {
   const [startDate, setStartDate] = useState(null);
+  const [products, setProducts] = useState<string[]>([]);
+  const addProductInput = () => {
+    setProducts([...products, ""]);
+  };
+  const handleProductChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newProducts = [...products];
+    newProducts[index] = e.target.value;
+    setProducts(newProducts);
+    console.log(newProducts);
+  };
+  const removeProductInput = (index: number) => {
+    const newProducts = [...products];
+    newProducts.splice(index, 1);
+    setProducts(newProducts);
+  };
   return (
-    <div className="mt-5 ">
-      <section className="bg-white p-4 rounded-lg">
+    <>
+      <section className="bg-white p-4 rounded-lg mt-2 mb-5">
         <div className="flex gap-x-4">
           <div className="" id="select-client">
             <label className="block" htmlFor="">
@@ -43,6 +60,9 @@ const Invoices = () => {
             </div>
           </div>
           <div id="upload-images">
+            <label htmlFor="" className="block">
+              Plan Image
+            </label>
             <div className="relative  border-2 border-dotted border-gray-400 w-32 h-32">
               <label
                 htmlFor="image-upload"
@@ -76,78 +96,38 @@ const Invoices = () => {
         </div>
       </section>
 
-      <section className="bg-white rounded-lg p-4 mt-8">
-        <div className="flex items-center gap-x-10">
-          <div className="">
-            <div className="flex items-center gap-x-3">
-              <div className="" id="select-trip">
-                <label className="block" htmlFor="">
-                  Product type:
-                </label>
-                <div className="relative">
-                  <select className="block appearance-none w-[150px] bg-white border border-gray-500 text-gray-700 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ">
-                    <option>Plan</option>
-                    <option>Missouri</option>
-                    <option>Texas</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 left-[110px] flex items-center  px-2">
-                    <BsChevronDown size={20} />
-                  </div>
-                </div>
-              </div>
-              <div className="" id="product">
-                <label className="block" htmlFor="">
-                  Products:
-                </label>
-                <div className="relative">
-                  <select className="block appearance-none w-[240px] bg-white border border-gray-500 text-gray-700 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ">
-                    <option>Plan</option>
-                    <option>Missouri</option>
-                    <option>Texas</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 left-[200px] flex items-center  px-2">
-                    <BsChevronDown size={20} />
-                  </div>
-                </div>
-              </div>
-              <div className="" id="description">
-                <label className="block" htmlFor="">
-                  Description:
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    className="block appearance-none w-[340px] bg-white border border-gray-500 text-gray-700 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-gray-500 "
-                    placeholder="Product for trip T2390"
+      <section className="">
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th className="text-left pb-3 ">Product Type:</th>
+              <th className="text-left pb-3 ">Products:</th>
+              <th className="text-left pb-3 ">Description:</th>
+              <th className="text-left pb-3 ">Total:</th>
+              <th className="text-left pb-3 "></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {products.map((product, index) => (
+              <>
+                <tr key={index}>
+                  <ProductInput
+                    key={index}
+                    onChange={(e) => handleProductChange(e, index)}
+                    onRemove={() => removeProductInput(index)}
                   />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="">
-            <div className="flex items-center gap-x-2">
-              <div>
-                <label className="block" htmlFor="">
-                  total
-                </label>
-                <input
-                  type="text"
-                  className="block appearance-none  w-[150px] bg-white border border-gray-500 text-gray-700 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-gray-500 "
-                  placeholder="1100"
-                />
-              </div>
-
-              <button>
-                {" "}
-                <Image src={deletebutton} alt="/" />{" "}
-              </button>
-            </div>
-          </div>
-        </div>
-        <button className="text-blue-600 text-lg font-semibold py-5">
+                </tr>
+              </>
+            ))}
+          </tbody>
+        </table>
+        <button
+          onClick={addProductInput}
+          className="text-blue-600 text-lg font-semibold py-5">
           + Add product
         </button>
+
         <hr />
         <div className="subtotal text-end py-7">
           <p className="text-lg font-semibold">
@@ -175,7 +155,7 @@ const Invoices = () => {
           </p>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 
