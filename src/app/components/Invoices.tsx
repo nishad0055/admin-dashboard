@@ -1,13 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { BsChevronDown, BsCalendar4, BsUpload } from "react-icons/bs";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import ProductInput from "./ProductInput";
+import Image from "next/image";
 
 const Invoices = () => {
   const [startDate, setStartDate] = useState(null);
   const [products, setProducts] = useState<string[]>([]);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   const addProductInput = () => {
     setProducts([...products, ""]);
   };
@@ -25,6 +28,21 @@ const Invoices = () => {
     newProducts.splice(index, 1);
     setProducts(newProducts);
   };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        setSelectedImage(e.target.result as string);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
       <section className="bg-white p-4 rounded-lg mt-2 mb-5">
@@ -67,15 +85,39 @@ const Invoices = () => {
               <label
                 htmlFor="image-upload"
                 className="absolute inset-0 flex justify-center items-center cursor-pointer">
-                <span className="text-gray-600 flex items-center gap-3">
+                <span
+                  className={`text-gray-600 flex items-center gap-3 ${
+                    selectedImage && "hidden"
+                  }`}>
                   <BsUpload />
                   <span className="block text-sm text-blue-600">
                     Upload <br />
                     Plan Image
                   </span>
                 </span>
+                {selectedImage && (
+                  <div>
+                    <Image
+                      src={selectedImage}
+                      alt="Selected"
+                      width={128}
+                      height={128}
+                      layout="responsive"
+                    />
+                  </div>
+                )}
               </label>
-              <input id="image-upload" type="file" className="hidden" />
+              <input
+                id="image-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: "none" }}
+                ref={(fileInput) =>
+                  fileInput && (fileInput.style.display = "none")
+                }
+                className="hidden"
+              />
             </div>
           </div>
         </div>
